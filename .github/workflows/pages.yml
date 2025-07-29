@@ -25,7 +25,7 @@ jobs:
 
       - name: ビルドを実行
         working-directory: vue-project
-        run: npm run build
+        run: npm run gh
 
       - name: 成果物を移動する
         run: |
