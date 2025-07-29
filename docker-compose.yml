@@ -1,0 +1,10 @@
+services:
+  node:
+    container_name: vue-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./vue-project:/app
+    ports:
+      - '5173:5173'

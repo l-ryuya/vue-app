@@ -1,0 +1,39 @@
+name: github pages up
+
+on:
+  push:
+
+permissions:
+  contents: write
+
+jobs:
+  publish-gh-pages:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: チェックアウト
+        uses: actions/checkout@v4
+
+      - name: Node.js セットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 依存関係をインストール
+        working-directory: vue-project
+        run: npm ci
+
+      - name: ビルドを実行
+        working-directory: vue-project
+        run: npm run build
+
+      - name: 成果物を移動する
+        run: |
+          mkdir -p ./dist
+          cp -r vue-project/dist/* ./dist/
+
+      - name: Push gh-pages branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
